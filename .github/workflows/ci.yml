@@ -1,36 +1,25 @@
 name: PR 自动测试流水线
-
-# 触发条件：当有人向 main 主分支提 PR 时，自动执行
 on:
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
 
-# 任务配置：定义要执行的任务
 jobs:
-  run-python-tests:
-    # 运行环境：GitHub 免费提供的临时 Ubuntu Linux 云服务器
+  test:
     runs-on: ubuntu-latest
-
-    # 执行步骤：服务器按顺序执行的命令
     steps:
-      # 步骤1：把仓库里的代码拉到临时服务器
-      - name: 拉取仓库代码
+      - name: 拉取代码
         uses: actions/checkout@v4
 
-      # 步骤2：在服务器上安装 Python 3.10 环境
-      - name: 配置 Python 环境
+      - name: 配置Python环境
         uses: actions/setup-python@v5
         with:
           python-version: "3.10"
           cache: 'pip'
 
-      # 步骤3：安装 pytest 测试框架（Python 跑测试的工具）
       - name: 安装测试依赖
         run: |
           python -m pip install --upgrade pip
           pip install pytest
 
-      # 步骤4：执行我们写的测试文件，完成自动化测试
-      - name: 运行 Python 测试用例
+      - name: 运行自动化测试
         run: pytest test_demo.py -v
