@@ -3,3 +3,6 @@ def test_add():
 
 def test_string():
     assert "ci" in "github ci"
+
+def test_string():
+    assert "ci" in "github ci"
